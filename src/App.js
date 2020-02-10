@@ -1,25 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import GoogleApiWrapper from './Map';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+      <nav className="navbar navbar-expand-sm navbar-light">
+        <a className="navbar-brand">
+            <img src="./Img/RESTIE_logo.png" alt="logo" style={{width:"200px"}} />
         </a>
-      </header>
+        <ul>
+            <li>
+              Home
+            </li>
+            <li>
+              Restaurants
+            </li>
+        </ul>
+      </nav>
+      <GoogleApiWrapper />
     </div>
+
   );
 }
 
