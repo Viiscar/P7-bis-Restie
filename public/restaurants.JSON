@@ -1,0 +1,196 @@
+[
+
+   {
+
+      "restaurantName":"Asere Cubano",
+
+      "address":"180 Calle dos Hermanos, San Juan 00907-3008 Puerto Rico",
+
+      "lat":18.4506144,
+
+      "long":-66.0707692,
+
+      "ratings":[
+
+         {
+
+            "stars":4,
+
+            "comment":"Un excellent restaurant, j'y reviendrai ! Par contre il vaut mieux aimer la viande."
+
+         },
+
+         {
+
+            "stars":5,
+
+            "comment":"Tout simplement mon restaurant préféré !"
+
+         }
+
+      ]
+
+   },
+
+   {
+
+      "restaurantName":"El Porteño",
+
+      "address":"Av. Jesus T Piñero 273 San Juan, Puerto Rico",
+
+      "lat":18.4076768,
+
+      "long":-66.0607199,
+
+      "ratings":[
+
+         {
+
+            "stars":5,
+
+            "comment":"Viande succullante !"
+
+         },
+
+         {
+
+            "stars":3,
+
+            "comment":"Bonne viande, mais il ne vaut mieux pas être végétarien"
+
+         }
+
+      ]
+
+   },
+
+   {
+
+    "restaurantName":"Margarita's",
+
+    "address":"1013 Avenida Franklin D Roosevelt San Juan",
+
+    "lat":18.415627693591215,
+
+    "long":-66.08043168961264,
+
+    "ratings":[
+
+       {
+
+          "stars":5,
+
+          "comment":"Le meilleur restaurant mexicain de San Juan."
+
+       },
+
+       {
+
+          "stars":4,
+
+          "comment":"Très bon, mais ce n'est pas vraimment de la cuisine mexicaine. Plutôt un mélange"
+
+       }
+
+    ]
+
+ },
+
+ {
+
+    "restaurantName":"Munchies",
+
+    "address":"Calle Alfonso XII, San German 00683, Puerto Rico",
+
+    "lat":18.0817052,
+
+    "long":-67.0418884,
+
+    "ratings":[
+
+       {
+
+          "stars":4,
+
+          "comment":"Un excellent restaurant. Le Hamburger Hawaien est hallucinant !"
+
+       },
+
+       {
+
+          "stars":5,
+
+          "comment":"On sent que c'est des produits frais. Je recommande a 100%"
+
+       }
+
+    ]
+
+ },
+
+ {
+
+    "restaurantName":"Acosta",
+
+    "address":"00682 Cornelia, Puerto Rico",
+
+    "lat":18.1470854,
+
+    "long":-67.1767864,
+
+    "ratings":[
+
+       {
+
+          "stars":4,
+
+          "comment":"Très bon restaurant. De très bons fruits mers."
+
+       },
+
+       {
+
+          "stars":5,
+
+          "comment":"J'ai jamais mangé de meilleurs poissons que dans ce retaurant !"
+
+       }
+
+    ]
+
+ },
+
+ {
+
+    "restaurantName":"Kimpo Garden",
+
+    "address":"264 Ave Jesus T Pinero, San Juan 00918-4004, Puerto Rico",
+
+    "lat":18.4077980,
+
+    "long":-66.0602790,
+
+    "ratings":[
+
+       {
+
+          "stars":4,
+
+          "comment":"Un excellent restaurant, sauf pour ceux qui n'aiment pas les sauces à base de soja."
+
+       },
+
+       {
+
+          "stars":5,
+
+          "comment":"Meilleur restaurant asiatique sur San Juan !"
+
+       }
+
+    ]
+
+ }
+
+]
+
