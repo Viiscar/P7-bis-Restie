@@ -39,7 +39,6 @@ function App() {
       </nav>
       <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants}/>
     </div>
-
   );
 }
 
