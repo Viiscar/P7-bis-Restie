@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import React, { Component, } from 'react';
+import { Map, GoogleApiWrapper, Marker  } from 'google-maps-react';
 
 const mapStyles = {
   width: '100%',
@@ -7,17 +7,23 @@ const mapStyles = {
 };
 
 export class MapContainer extends Component {
-  render() {
+  
+  render(props) {
+    console.log(this.props.restaurants[0].restaurantName);
+    console.log(this.props.restaurants[0].long);
+    console.log(this.props.restaurants.map((rest, index) => rest.lat));
     return (
       <Map
         google={this.props.google}
-        zoom={14}
+        zoom={10}
         style={mapStyles}
-        initialCenter={{
-         lat: -1.2884,
-         lng: 36.8233
-        }}
-      />
+        initialCenter={this.props.geoloc}
+      >
+        <Marker
+        title={'The marker`s title will appear as a tooltip.'}
+        name={'SOMA'}
+        position={{lat: 18.4625, lng: -66.1099}} />
+      </Map>
     );
   }
 }
