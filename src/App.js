@@ -3,7 +3,7 @@ import GoogleApiWrapper from './Map';
 
 function App() {
 
-  const [restaurants, setRestaurants] = useState();
+  const [restaurants, setRestaurants] = useState([]);
   const [geoloc, setGeoloc] = useState({lat: 18.4625, lng:-66.1099});
 
   useEffect(() => {
@@ -15,15 +15,19 @@ function App() {
     }
     fetchData();
     // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(position => setGeoloc({
-    //       lat: position.coords.latitude,
-    //       lng: position.coords.longitude
-    //       })
-    //   )
-    //   console.log(geoloc);
+    //   const getCurrentLocation = async () => {
+    //     navigator.geolocation.getCurrentPosition (position => 
+    //       setGeoloc({
+    //         lat: position.coords.latitude,
+    //         lng: position.coords.longitude
+    //         })
+    //     )
+    //   }
+    //   getCurrentLocation();      
     // }
   }, []);
 
+  //console.log(geoloc);
   return (
     <div className="App">
       <nav className="navbar navbar-expand-sm navbar-light">
