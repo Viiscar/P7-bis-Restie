@@ -6,35 +6,16 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      markerSelected : true,
-      mapStyles: {}
-      
+      mapStyles: {width: '100%',height: '100%'} 
     };
-
-    if(this.markerSelected === true){
-      this.setState({ 
-        mapStyles : {width: '100%',height: '100%'},
-      });
-      
-    } else {
-      this.setState({ 
-        mapStyles : {width: '50%',height: '100%'},
-      });
-      console.log(this.mapStyles);
-    }
-
     this.onMarkerClick = this.onMarkerClick.bind(this);
   }
-    onMarkerClick(props, marker, e) {
-      //console.log(props);
-      //console.log(marker);
-      //console.log(e);
-      
-      this.setState({ 
-        markerSelected : true,
-      });
-      console.log(this.mapStyles);
-    }
+
+  onMarkerClick() {
+    this.setState({ 
+      mapStyles : {width: '70%',height: '100%'},
+    });  
+  }
   
   render(props) {
    
@@ -42,7 +23,7 @@ export class MapContainer extends Component {
       <Map
         google={this.props.google}
         zoom={10}
-        style={this.mapStyles}
+        style={this.state.mapStyles}
         initialCenter={this.props.geoloc}
       >
         {this.props.restaurants.map(rest => 
