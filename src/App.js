@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GoogleApiWrapper from './Map';
+import Panel from './Panel';
 
 function App() {
 
@@ -41,7 +42,9 @@ function App() {
             </li>
         </ul>
       </nav>
-      <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants}/>
+      <div className="map-container">
+        <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants}/>
+      </div>
     </div>
   );
 }
