@@ -8,7 +8,8 @@ export class MapContainer extends Component {
     this.state = {
       mapStyles: {width: '100%',height: '100%'},
       panelStyles: {},
-      restaurantDetails: ""
+      restaurantName: "",
+      restaurantAddrs: "",
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
   }
@@ -17,15 +18,15 @@ export class MapContainer extends Component {
     this.setState({ 
       mapStyles : {width: '70%',height: '100%'},
       panelStyles: {
-        backgroundColor: 'blue',
         position: 'absolute',
         right:'0px',
         height: '100%',
         width: '30%'},
-      restaurantDetails: "<p>"+ this.props.restaurants[e.index].restaurantName +"</p>"
+      restaurantName: this.props.restaurants[e.index].restaurantName,
+      restaurantAddrs: this.props.restaurants[e.index].address
+
     });
-    console.log(this.state.restaurantDetails)
-    console.log(this.state.panelStyles)
+    console.log(this.props.restaurants[e.index])
   }
   
   render(props) {
@@ -36,6 +37,8 @@ export class MapContainer extends Component {
           zoom={10}
           style={this.state.mapStyles}
           initialCenter={this.props.geoloc}
+          disableDefaultUI= {true}
+
         >
           {this.props.restaurants.map((rest, index) => 
             <Marker
@@ -47,7 +50,10 @@ export class MapContainer extends Component {
           )}
         </Map>
         <div style={this.state.panelStyles} >
-            {this.state.restaurantDetails}
+            <h3>{this.state.restaurantName}</h3>
+            <h6>Adresse:</h6>
+            <p>{this.state.restaurantAddrs}</p>
+
         </div>
       </>
     );

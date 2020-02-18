@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import GoogleApiWrapper from './Map';
-import Panel from './Panel';
 
 function App() {
 
@@ -11,7 +10,7 @@ function App() {
     const fetchData = async () => {
       const fetchResult = await fetch('./restaurants.JSON')
         .then(response => response.json());
-
+        //faire moyennes
         setRestaurants(fetchResult)
     }
     fetchData();

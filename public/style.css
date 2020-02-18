@@ -5,3 +5,11 @@
  ul {
      list-style: none;
  }
+
+ p,h6 {
+     padding-left: 10px;
+ }
+
+ h3 {
+     padding: 10px;
+ }
