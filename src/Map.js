@@ -26,7 +26,6 @@ export class MapContainer extends Component {
       restaurantAddrs: this.props.restaurants[e.index].address
 
     });
-    console.log(this.props.restaurants[e.index])
   }
   
   render(props) {

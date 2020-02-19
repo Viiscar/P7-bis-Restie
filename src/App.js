@@ -10,7 +10,21 @@ function App() {
     const fetchData = async () => {
       const fetchResult = await fetch('./restaurants.JSON')
         .then(response => response.json());
-        //faire moyennes
+
+      fetchResult.map(rest => {
+        const length = rest.ratings.length;
+        const stars = rest.ratings.map(rating =>{
+          return rating.stars
+        });
+
+        const totalStars = stars.reduce((total,star) =>{
+          return total += star
+        })
+        const average =  totalStars/length;
+        console.log(average)
+      } )
+
+        console.log(fetchResult[0].ratings[0].stars);
         setRestaurants(fetchResult)
     }
     fetchData();
