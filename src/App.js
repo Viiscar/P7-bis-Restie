@@ -5,6 +5,7 @@ function App() {
 
   const [restaurants, setRestaurants] = useState([]);
   const [geoloc, setGeoloc] = useState({lat: 18.4625, lng:-66.1099});
+  const [averageStars, setAverageStars] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,10 +22,9 @@ function App() {
           return total += star
         })
         const average =  totalStars/length;
-        console.log(average)
+        setAverageStars(averageStars => averageStars.concat(average));
       } )
 
-        console.log(fetchResult[0].ratings[0].stars);
         setRestaurants(fetchResult)
     }
     fetchData();
@@ -56,7 +56,7 @@ function App() {
         </ul>
       </nav>
       <div className="map-container">
-        <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants}/>
+        <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants} average={averageStars}/>
       </div>
     </div>
   );

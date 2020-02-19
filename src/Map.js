@@ -10,6 +10,7 @@ export class MapContainer extends Component {
       panelStyles: {},
       restaurantName: "",
       restaurantAddrs: "",
+      averageStars: ""
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
   }
@@ -23,12 +24,13 @@ export class MapContainer extends Component {
         height: '100%',
         width: '30%'},
       restaurantName: this.props.restaurants[e.index].restaurantName,
-      restaurantAddrs: this.props.restaurants[e.index].address
-
+      restaurantAddrs: this.props.restaurants[e.index].address,
+      averageStars: this.props.average[e.index]
     });
   }
   
   render(props) {
+    console.log(this.props.average);
     return (
       <>
         <Map
@@ -52,6 +54,9 @@ export class MapContainer extends Component {
             <h3>{this.state.restaurantName}</h3>
             <h6>Adresse:</h6>
             <p>{this.state.restaurantAddrs}</p>
+            <h6>Average stars:</h6>
+            <p>{this.state.averageStars}</p>
+            <h6>Comments:</h6>
 
         </div>
       </>
