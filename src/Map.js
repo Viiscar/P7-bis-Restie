@@ -30,7 +30,12 @@ export class MapContainer extends Component {
   }
   
   render(props) {
-    console.log(this.props.average);
+    const t = this.props.average.map((val, index) => {
+      if (val === 4) {
+        console.log(index);
+      }
+    });
+    console.log(this.props.selectedStars)
     return (
       <>
         <Map
