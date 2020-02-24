@@ -10,7 +10,6 @@ export class MapContainer extends Component {
       panelStyles: {},
       restaurantName: "",
       restaurantAddrs: "",
-      averageStars: ""
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
   }
@@ -25,17 +24,26 @@ export class MapContainer extends Component {
         width: '30%'},
       restaurantName: this.props.restaurants[e.index].restaurantName,
       restaurantAddrs: this.props.restaurants[e.index].address,
-      averageStars: this.props.average[e.index]
+      restaurantAverage: this.props.restaurants[e.index].average
     });
   }
   
   render(props) {
-    const t = this.props.average.map((val, index) => {
-      if (val === 4) {
-        console.log(index);
-      }
-    });
-    console.log(this.props.selectedStars)
+
+    console.log("selected stars " , this.props.selectedStars);
+    console.log("restaurant " , this.props.restaurants);
+    let restaurantDisplayed = null;
+
+    
+    if(this.props.selectedStars === "-" || this.props.selectedStars === undefined){
+      restaurantDisplayed = this.props.restaurants;
+    } else{
+      console.log(" eeeee")
+      restaurantDisplayed = 
+        this.props.restaurants.filter( rest => rest.average <= this.props.selectedStars);
+
+    }
+  
     return (
       <>
         <Map
@@ -46,7 +54,7 @@ export class MapContainer extends Component {
           disableDefaultUI= {true}
 
         >
-          {this.props.restaurants.map((rest, index) => 
+          {restaurantDisplayed.map((rest, index) => 
             <Marker
               onClick={this.onMarkerClick}
               title={rest.restaurantName}
@@ -60,7 +68,7 @@ export class MapContainer extends Component {
             <h6>Adresse:</h6>
             <p>{this.state.restaurantAddrs}</p>
             <h6>Average stars:</h6>
-            <p>{this.state.averageStars}</p>
+            <p>{this.state.restaurantAverage}</p>
             <h6>Comments:</h6>
 
         </div>

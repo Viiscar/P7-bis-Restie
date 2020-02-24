@@ -5,7 +5,6 @@ function App() {
 
   const [restaurants, setRestaurants] = useState([]);
   const [geoloc, setGeoloc] = useState({lat: 18.4625, lng:-66.1099});
-  const [averageStars, setAverageStars] = useState([]);
   const [selectedStars, setSelectedStars] = useState();
 
   useEffect(() => {
@@ -15,18 +14,15 @@ function App() {
 
       fetchResult.map(rest => {
         const length = rest.ratings.length;
-        const stars = rest.ratings.map(rating =>{
-          return rating.stars
-        });
+        const stars = rest.ratings.map(rating => rating.stars);
 
-        const totalStars = stars.reduce((total,star) =>{
-          return total += star
-        })
-        const average =  totalStars/length;
-        setAverageStars(averageStars => averageStars.concat(average));
+        const totalStars = stars.reduce((total,star) => total += star)
+        rest.average =  totalStars/length;
+
       } )
 
         setRestaurants(fetchResult)
+        console.log(restaurants);
     }
     fetchData();
     // if (navigator.geolocation) {
@@ -62,6 +58,7 @@ function App() {
       <div>
         Afficher les restaurants comportant {" "}   
         <select name="my_html_select_box"  onClick={handleClick} >
+          <option value="-">-</option>
           <option value="1">1 etoiles</option>
           <option value="2">2 etoiles</option>
           <option value="3">3 etoiles</option>
@@ -70,7 +67,7 @@ function App() {
         </select>
       </div>
       <div className="map-container">
-        <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants} average={averageStars} selectedStars={selectedStars}/>
+        <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants} selectedStars={selectedStars}/>
       </div>
     </div>
   );
