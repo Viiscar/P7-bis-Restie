@@ -1,5 +1,6 @@
 import React, { Component, useState, } from 'react';
 import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
+import Panel from './Panel';
 
 export function MapContainer (props) {
 
@@ -23,17 +24,12 @@ export function MapContainer (props) {
 
   }
 
-  console.log("selected stars " , props.selectedStars);
-  console.log("restaurant " , props.restaurants);
   let restaurantDisplayed = null;
-
     
   if(props.selectedStars === "-" || props.selectedStars === undefined){
     restaurantDisplayed = props.restaurants;
   } else {
-    console.log(" eeeee")
     restaurantDisplayed = props.restaurants.filter( rest => rest.average <= props.selectedStars);
-
   }
 
   return ( 
@@ -55,15 +51,12 @@ export function MapContainer (props) {
             position={{lat: rest.lat, lng: rest.long}} />
         )}
       </Map>
-      <div style={panelStyles} >
-          <h3>{restaurantName}</h3>
-          <h6>Adresse:</h6>
-          <p>{restaurantAddrs}</p>
-          <h6>Average stars:</h6>
-          <p>{restaurantAverage}</p>
-          <h6>Comments:</h6>
-
-      </div>
+      <Panel 
+        panelStyles={panelStyles} 
+        restaurantName={restaurantName} 
+        restaurantAddrs= {restaurantAddrs} 
+        restaurantAverage={restaurantAverage} 
+      />
     </>
     
   );
