@@ -1,80 +1,72 @@
-import React, { Component, } from 'react';
+import React, { Component, useState, } from 'react';
 import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 
-export class MapContainer extends Component {
+export function MapContainer (props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      mapStyles: {width: '100%',height: '100%'},
-      panelStyles: {},
-      restaurantName: "",
-      restaurantAddrs: "",
-    };
-    this.onMarkerClick = this.onMarkerClick.bind(this);
+  const [mapStyles, setMapStyles] = useState({width: '100%',height: '100%'});
+  const [panelStyles, setPanelStyles] = useState({});
+  const [restaurantName, setRestaurantName] = useState();
+  const [restaurantAddrs, setRestaurantAddrs] = useState();
+  const [restaurantAverage, setRestaurantAverage] = useState();
+
+  function onMarkerClick(e) {
+
+    setMapStyles({width: '70%',height: '100%'});
+    setPanelStyles({
+      position: 'absolute',
+      right:'0px',
+      height: '100%',
+      width: '30%'});
+    setRestaurantName(props.restaurants[e.index].restaurantName);
+    setRestaurantAddrs(props.restaurants[e.index].address);
+    setRestaurantAverage(props.restaurants[e.index].average);
+
   }
 
-  onMarkerClick(e) {
-    this.setState({ 
-      mapStyles : {width: '70%',height: '100%'},
-      panelStyles: {
-        position: 'absolute',
-        right:'0px',
-        height: '100%',
-        width: '30%'},
-      restaurantName: this.props.restaurants[e.index].restaurantName,
-      restaurantAddrs: this.props.restaurants[e.index].address,
-      restaurantAverage: this.props.restaurants[e.index].average
-    });
-  }
-  
-  render(props) {
-
-    console.log("selected stars " , this.props.selectedStars);
-    console.log("restaurant " , this.props.restaurants);
-    let restaurantDisplayed = null;
+  console.log("selected stars " , props.selectedStars);
+  console.log("restaurant " , props.restaurants);
+  let restaurantDisplayed = null;
 
     
-    if(this.props.selectedStars === "-" || this.props.selectedStars === undefined){
-      restaurantDisplayed = this.props.restaurants;
-    } else{
-      console.log(" eeeee")
-      restaurantDisplayed = 
-        this.props.restaurants.filter( rest => rest.average <= this.props.selectedStars);
+  if(props.selectedStars === "-" || props.selectedStars === undefined){
+    restaurantDisplayed = props.restaurants;
+  } else {
+    console.log(" eeeee")
+    restaurantDisplayed = props.restaurants.filter( rest => rest.average <= props.selectedStars);
 
-    }
-  
-    return (
-      <>
-        <Map
-          google={this.props.google}
-          zoom={10}
-          style={this.state.mapStyles}
-          initialCenter={this.props.geoloc}
-          disableDefaultUI= {true}
-
-        >
-          {restaurantDisplayed.map((rest, index) => 
-            <Marker
-              onClick={this.onMarkerClick}
-              title={rest.restaurantName}
-              name={rest.restaurantName}
-              index={index}
-              position={{lat: rest.lat, lng: rest.long}} />
-          )}
-        </Map>
-        <div style={this.state.panelStyles} >
-            <h3>{this.state.restaurantName}</h3>
-            <h6>Adresse:</h6>
-            <p>{this.state.restaurantAddrs}</p>
-            <h6>Average stars:</h6>
-            <p>{this.state.restaurantAverage}</p>
-            <h6>Comments:</h6>
-
-        </div>
-      </>
-    );
   }
+
+  return ( 
+    <>
+      <Map
+        google={props.google}
+        zoom={10}
+        style={mapStyles}
+        initialCenter={props.geoloc}
+        disableDefaultUI= {true}
+
+      >
+        {restaurantDisplayed.map((rest, index) => 
+          <Marker
+            onClick={onMarkerClick}
+            title={rest.restaurantName}
+            name={rest.restaurantName}
+            index={index}
+            position={{lat: rest.lat, lng: rest.long}} />
+        )}
+      </Map>
+      <div style={panelStyles} >
+          <h3>{restaurantName}</h3>
+          <h6>Adresse:</h6>
+          <p>{restaurantAddrs}</p>
+          <h6>Average stars:</h6>
+          <p>{restaurantAverage}</p>
+          <h6>Comments:</h6>
+
+      </div>
+    </>
+    
+  );
 }
 
 export default GoogleApiWrapper({
