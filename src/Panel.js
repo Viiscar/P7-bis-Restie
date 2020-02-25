@@ -1,4 +1,5 @@
 import React from 'react';
+import CommentForm from './CommentForm';
 
 function Panel(props){
 
@@ -10,6 +11,7 @@ function Panel(props){
             <h6>Average stars:</h6>
             <p>{props.restaurantAverage}</p>
             <h6>Comments:</h6>
+            <CommentForm />
         </div>
     )
     
