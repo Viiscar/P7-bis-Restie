@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+//import CommentList from './CommentList';
 
-function CommentForm(){
-
+function CommentForm(props){
     const [stars, setStars] = useState("-");
     const [comment, setComment] = useState("");
     const [error, setError] = useState("");
@@ -18,7 +18,9 @@ function CommentForm(){
         e.preventDefault();
 
         if (stars !== "-" && comment !== ""){
-            console.log(comment + stars);
+            setError("");
+            props.restaurants[props.restaurantIndex].ratings.push({stars: stars, comment: comment});  
+            console.log(props.restaurants);
         } else {
             setError("Veullez selectionner une note et écrire un commentaire");
         }
@@ -75,7 +77,8 @@ function CommentForm(){
                     Comment &#10148;
                     </button>
                 </div>
-        </form>
+            </form>
+            {/* <CommentList restaurants={props.restaurants}/> */}
         </>
     )
 

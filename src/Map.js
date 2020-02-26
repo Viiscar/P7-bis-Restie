@@ -6,6 +6,7 @@ export function MapContainer (props) {
 
   const [mapStyles, setMapStyles] = useState({width: '100%',height: '100%'});
   const [panelStyles, setPanelStyles] = useState({});
+  const [restaurantIndex, setRestaurantIndex] = useState();
   const [restaurantName, setRestaurantName] = useState();
   const [restaurantAddrs, setRestaurantAddrs] = useState();
   const [restaurantAverage, setRestaurantAverage] = useState();
@@ -18,6 +19,7 @@ export function MapContainer (props) {
       right:'0px',
       height: '100%',
       width: '30%'});
+    setRestaurantIndex(e.index);
     setRestaurantName(props.restaurants[e.index].restaurantName);
     setRestaurantAddrs(props.restaurants[e.index].address);
     setRestaurantAverage(props.restaurants[e.index].average);
@@ -55,7 +57,9 @@ export function MapContainer (props) {
         panelStyles={panelStyles} 
         restaurantName={restaurantName} 
         restaurantAddrs= {restaurantAddrs} 
-        restaurantAverage={restaurantAverage} 
+        restaurantAverage={restaurantAverage}
+        restaurants={props.restaurants}
+        restaurantIndex={restaurantIndex}
       />
     </>
     

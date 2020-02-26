@@ -11,7 +11,7 @@ function Panel(props){
             <h6>Average stars:</h6>
             <p>{props.restaurantAverage}</p>
             <h6>Comments:</h6>
-            <CommentForm />
+            <CommentForm restaurants={props.restaurants} restaurantIndex={props.restaurantIndex}/>
         </div>
     )
     
