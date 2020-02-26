@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import GoogleApiWrapper from './Map';
+import GoogleApiWrapper from './Components/Map';
 
 function App() {
 

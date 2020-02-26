@@ -6,7 +6,7 @@ export function MapContainer (props) {
 
   const [mapStyles, setMapStyles] = useState({width: '100%',height: '100%'});
   const [panelStyles, setPanelStyles] = useState({});
-  const [restaurantIndex, setRestaurantIndex] = useState();
+  const [restaurantIndex, setRestaurantIndex] = useState(0);
   const [restaurantName, setRestaurantName] = useState();
   const [restaurantAddrs, setRestaurantAddrs] = useState();
   const [restaurantAverage, setRestaurantAverage] = useState();

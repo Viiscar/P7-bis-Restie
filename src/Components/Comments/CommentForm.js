@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-//import CommentList from './CommentList';
+import CommentList from './CommentList';
 
 function CommentForm(props){
     const [stars, setStars] = useState("-");
@@ -78,7 +78,7 @@ function CommentForm(props){
                     </button>
                 </div>
             </form>
-            {/* <CommentList restaurants={props.restaurants}/> */}
+            <CommentList restaurants={props.restaurants} restaurantIndex={props.restaurantIndex}/>
         </>
     )
 

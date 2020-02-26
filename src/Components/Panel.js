@@ -1,5 +1,5 @@
 import React from 'react';
-import CommentForm from './CommentForm';
+import CommentForm from './Comments/CommentForm';
 
 function Panel(props){
 
