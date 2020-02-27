@@ -9,7 +9,7 @@ function Comment(props){
             width="48"
             height="48"
             src={`https://api.adorable.io/avatars/48/${props.comment.toLowerCase()}@adorable.png`}
-            alt={props.stars}
+            alt="avatar"
         />
 
         <div className="media-body p-2 shadow-sm rounded bg-light border">

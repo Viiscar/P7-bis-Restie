@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import CommentList from './CommentList';
 
 function CommentForm(props){
+    const [restaurants, setRestaurants] = useState(props.restaurants);
     const [stars, setStars] = useState("-");
     const [comment, setComment] = useState("");
     const [error, setError] = useState("");
+    const [restaurantIndex] = useState(props.restaurantIndex);
 
     function handleClick(e){
-        setStars(e.target.value);
+        setStars(parseInt(e.target.value));
     }
 
     function handleFieldChange(e) {
@@ -16,11 +18,16 @@ function CommentForm(props){
 
     function onSubmit(e){
         e.preventDefault();
-
+        //récupere l'index qu'une fois
         if (stars !== "-" && comment !== ""){
             setError("");
-            props.restaurants[props.restaurantIndex].ratings.push({stars: stars, comment: comment});  
-            console.log(props.restaurants);
+            console.log("avant ", restaurants);
+            console.log("Restindex " , restaurants[restaurantIndex]); // deviens undefined au 2e submit
+            const newRest = restaurants[restaurantIndex].ratings.push({stars: stars, comment: comment});
+            console.log("newRest" , newRest);
+            setRestaurants(newRest);
+            console.log("après " , restaurants);
+            console.log("index"+ restaurantIndex);
         } else {
             setError("Veullez selectionner une note et écrire un commentaire");
         }
@@ -60,16 +67,6 @@ function CommentForm(props){
                     />
                 </div>
 
-                <div className="form-group">
-                    <input
-                    type="hidden"
-                    onChange={handleFieldChange}
-                    value={"this.props.index"} //récupérer index de restaurant.js useparams
-                    className="form-control"
-                    name="index"
-                    />
-                </div>
-
                 {renderError()}
 
                 <div className="form-group">
@@ -78,7 +75,7 @@ function CommentForm(props){
                     </button>
                 </div>
             </form>
-            <CommentList restaurants={props.restaurants} restaurantIndex={props.restaurantIndex}/>
+            <CommentList restaurants={restaurants} restaurantIndex={restaurantIndex}/>
         </>
     )
 

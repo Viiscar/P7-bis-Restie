@@ -5,8 +5,8 @@ import Panel from './Panel';
 export function MapContainer (props) {
 
   const [mapStyles, setMapStyles] = useState({width: '100%',height: '100%'});
-  const [panelStyles, setPanelStyles] = useState({});
-  const [restaurantIndex, setRestaurantIndex] = useState(0);
+  const [panelStyles, setPanelStyles] = useState({visibility: 'hidden'});
+  const [restaurantIndex, setRestaurantIndex] = useState(0); //le probleme vient de la
   const [restaurantName, setRestaurantName] = useState();
   const [restaurantAddrs, setRestaurantAddrs] = useState();
   const [restaurantAverage, setRestaurantAverage] = useState();
@@ -23,7 +23,7 @@ export function MapContainer (props) {
     setRestaurantName(props.restaurants[e.index].restaurantName);
     setRestaurantAddrs(props.restaurants[e.index].address);
     setRestaurantAverage(props.restaurants[e.index].average);
-
+    console.log("index sur maps ", restaurantIndex);
   }
 
   let restaurantDisplayed = null;

@@ -6,7 +6,7 @@
      list-style: none;
  }
 
- p,h6 {
+ p,h6, form, .commentList {
      padding-left: 10px;
  }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import CommentForm from './Comments/CommentForm';
 
 function Panel(props){
-
+    
     return(
         <div style={props.panelStyles} >
             <h3>{props.restaurantName}</h3>
