@@ -1,4 +1,4 @@
-import React, { useState, } from 'react';
+import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 import Panel from './Panel';
 
@@ -6,25 +6,24 @@ export function MapContainer (props) {
 
   const [mapStyles, setMapStyles] = useState({width: '100%',height: '100%'});
   const [panelStyles, setPanelStyles] = useState({visibility: 'hidden'});
-  const [restaurantIndex, setRestaurantIndex] = useState(0); //le probleme vient de la
-  const [restaurantName, setRestaurantName] = useState();
-  const [restaurantAddrs, setRestaurantAddrs] = useState();
-  const [restaurantAverage, setRestaurantAverage] = useState();
+  const [restaurants] = useState(props.restaurants);
+  const [restaurantSelected, setRestaurantSelected] = useState({});
+
 
   function onMarkerClick(e) {
-
     setMapStyles({width: '70%',height: '100%'});
     setPanelStyles({
       position: 'absolute',
       right:'0px',
       height: '100%',
       width: '30%'});
-    setRestaurantIndex(e.index);
-    setRestaurantName(props.restaurants[e.index].restaurantName);
-    setRestaurantAddrs(props.restaurants[e.index].address);
-    setRestaurantAverage(props.restaurants[e.index].average);
-    console.log("index sur maps ", restaurantIndex);
+      
+    setRestaurantSelected(restaurants[e.index]);
+
+    console.log("props Map.js", restaurants[e.index]);// affiche ce qui est selectionné actuellement 
+    console.log("set Map.js", restaurantSelected); // affiche ce qui a été sélectionné antérieurement
   }
+  
 
   let restaurantDisplayed = null;
     
@@ -55,11 +54,10 @@ export function MapContainer (props) {
       </Map>
       <Panel 
         panelStyles={panelStyles} 
-        restaurantName={restaurantName} 
-        restaurantAddrs= {restaurantAddrs} 
-        restaurantAverage={restaurantAverage}
-        restaurants={props.restaurants}
-        restaurantIndex={restaurantIndex}
+        restaurantName={restaurantSelected.restaurantName} 
+        restaurantAddrs= {restaurantSelected.address} 
+        restaurantAverage={restaurantSelected.average}
+        restaurantSelected={restaurantSelected}
       />
     </>
     
