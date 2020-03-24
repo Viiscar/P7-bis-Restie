@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Comment from './Comment';
+import { AppContext } from '../Context';
 
 function CommentList(props){
 
-    //console.log("props: " , props)
-
+    const {state} = useContext(AppContext);
     const [ratings, setRatings] = useState([]);
     
+    //Adding ratings to Context restaurant list
     useEffect(() => {
-        setRatings(props.restaurantSelected.ratings);
-    }, [props.restaurantSelected])
-
+        setRatings(state.restaurant.ratings);
+    }, [state.restaurant])
 
     return(
         ratings ?   
@@ -20,12 +20,13 @@ function CommentList(props){
                 Comment{ratings.length > 0 ? "s" : ""}
             </h5>
 
+            {/* if there are no comments diplay a message */}
             {ratings.length === 0  ? (
                 <div className="alert text-center alert-info">
                 Be the first to comment
                 </div>
             ) : null}
-            
+
             {ratings.map((rate, index) => (
                 <Comment key={index} comment={rate.comment} stars={rate.stars} />
             ))}

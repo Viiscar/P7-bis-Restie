@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import CommentForm from './Comments/CommentForm';
+import { AppContext } from './Context';
 
 function Panel(props){
-    const [restaurantSelected] = useState(props.restaurantSelected);
-    console.log("props panel.js" , restaurantSelected);
+
+    //Context
+    const {state} = useContext(AppContext);
+
+    console.log("Context State")
+    console.log(state.restaurant)
+    console.log(state.restaurant.restaurantName)
     return(
         <div style={props.panelStyles} >
-            <h3>{props.restaurantName}</h3>
+            <h3>{state.restaurant.restaurantName}</h3>
             <h6>Adresse:</h6>
-            <p>{props.restaurantAddrs}</p>
+            <p>{state.restaurant.address}</p>
             <h6>Average stars:</h6>
-            <p>{props.restaurantAverage}</p>
+            <p>{state.restaurant.average}</p>
             <h6>Comments:</h6>
-            <CommentForm  restaurantSelected={restaurantSelected}/>
+            <CommentForm />
         </div>
     )
     

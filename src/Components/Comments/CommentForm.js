@@ -1,28 +1,33 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import CommentList from './CommentList';
+import { AppContext } from '../Context';
 
 function CommentForm(props){
-    
+    //Context
+    const {state} = useContext(AppContext);
+
     const [stars, setStars] = useState("-");
     const [comment, setComment] = useState("");
     const [error, setError] = useState("");
-    const [restaurantSelected]= useState(props.restaurantSelected)
 
+    //Stars Selected
     function handleClick(e){
         setStars(parseInt(e.target.value));
     }
 
+    //Comment
     function handleFieldChange(e) {
-        setComment(e.target.value)
+        setComment(e.target.value) /// onchange --> update
     }
 
+    //Adds comment on submit
     function onSubmit(e){
         e.preventDefault();
-        //récupere l'index qu'une fois
         if (stars !== "-" && comment !== ""){
             setError("");
-            console.log(restaurantSelected);
-            restaurantSelected.ratings.push({stars: stars, comment: comment});
+            
+            state.restaurant.ratings.push({stars: stars, comment: comment});
+            setComment("")
 
         } else {
             setError("Veullez selectionner une note et écrire un commentaire");
@@ -30,6 +35,7 @@ function CommentForm(props){
         
     }
 
+    //If comment and rate are not added it will display an error mesage
     function renderError() {
         return error ? (
           <div className="alert alert-danger">{error}</div>
@@ -71,7 +77,7 @@ function CommentForm(props){
                     </button>
                 </div>
             </form>
-            <CommentList restaurantSelected={props.restaurantSelected}/>
+            <CommentList />
         </>
     )
 

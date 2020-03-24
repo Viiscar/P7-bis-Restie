@@ -7,15 +7,16 @@ function App() {
   const [geoloc, setGeoloc] = useState({lat: 18.4625, lng:-66.1099});
   const [selectedStars, setSelectedStars] = useState();
 
+  // Getting restaurant list from JSON
   useEffect(() => {
     const fetchData = async () => {
       const fetchResult = await fetch('./restaurants.JSON')
         .then(response => response.json());
-
+      
+      // calculating average stars per restaurant
       fetchResult.map(rest => {
         const length = rest.ratings.length;
         const stars = rest.ratings.map(rating => rating.stars);
-
         const totalStars = stars.reduce((total,star) => total += star)
         rest.average =  totalStars/length;
 
@@ -38,6 +39,7 @@ function App() {
     // }
   }, []);
 
+  //when we select stars
   function handleClick(e){
     setSelectedStars(e.target.value)
   }
