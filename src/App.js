@@ -22,22 +22,27 @@ function App() {
 
       } )
 
-        setRestaurants(fetchResult)
-        console.log(restaurants);
+      setRestaurants(fetchResult)
     }
     fetchData();
-    // if (navigator.geolocation) {
-    //   const getCurrentLocation = async () => {
-    //     navigator.geolocation.getCurrentPosition (position => 
-    //       setGeoloc({
-    //         lat: position.coords.latitude,
-    //         lng: position.coords.longitude
-    //         })
-    //     )
-    //   }
-    //   getCurrentLocation();      
-    // }
+    if (navigator.geolocation) {
+      console.log("if");
+      const getCurrentLocation = () => {
+        return new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {enableHighAccuracy: true, timeout: 10000 })
+        })
+        
+      }
+      getCurrentLocation()
+        .then((data) => {console.log(data)})
+        .catch((error) => {console.log(error)})    
+    }
   }, []);
+
+  //setGeoloc({
+    // lat: position.coords.latitude,
+    // lng: position.coords.longitude
+    // })
 
   //when we select stars
   function handleClick(e){

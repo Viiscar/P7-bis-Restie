@@ -6,10 +6,14 @@
      list-style: none;
  }
 
- p,h6, form, .commentList {
+ img,p,h6, form, .commentList {
      padding-left: 10px;
  }
 
  h3 {
      padding: 10px;
+ }
+
+ h6 {
+     padding-top: 10px;
  }
