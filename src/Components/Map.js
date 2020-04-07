@@ -1,10 +1,11 @@
 import React, { useState, useReducer } from 'react';
-import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
+import Marker from "react-google-maps";
+import Map from "./Place";
 import Panel from './Panel';
 import {AppContext, initialState, reducer} from './Context';
 
 
-export function MapContainer (props) {
+function MapContainer(props){
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -14,7 +15,7 @@ export function MapContainer (props) {
 
   const changeInputValue = (newValue) => {
 
-      dispatch({ type: 'UPDATE_INPUT', data: newValue,});
+    dispatch({ type: 'UPDATE_INPUT', data: newValue,});
   };
 
   //when click on marker
@@ -44,19 +45,24 @@ export function MapContainer (props) {
     <>
       <AppContext.Provider value={{ state, dispatch }}>
         <Map
-          google={props.google}
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC2qgPQ2fK60hEy74CACKeZZ6zVT4MBcs&libraries=places"
+          loadingElement={<div style={{ height: `100%` }} />}
+          containerElement={<div style={{ height: `400px` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+          center={props.geoloc}
           zoom={10}
-          style={mapStyles}
-          initialCenter={props.geoloc}
           disableDefaultUI= {true}
+          style={mapStyles}
         >
+        
           {restaurantDisplayed.map((rest, index) => 
-            <Marker
+            <Marker 
+              key={index} 
+              position={{lat: rest.lat, lng: rest.long}}
               onClick={onMarkerClick}
               title={rest.restaurantName}
               name={rest.restaurantName}
-              index={index}
-              position={{lat: rest.lat, lng: rest.long}} />
+            />
           )}
         </Map>
         <Panel 
@@ -68,6 +74,8 @@ export function MapContainer (props) {
   );
 }
 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBC2qgPQ2fK60hEy74CACKeZZ6zVT4MBcs'
-})(MapContainer);
+// export default GoogleApiWrapper({
+//   apiKey: 'AIzaSyBC2qgPQ2fK60hEy74CACKeZZ6zVT4MBcs'
+// })(MapContainer);
+
+export default MapContainer;
