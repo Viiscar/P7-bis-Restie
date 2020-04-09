@@ -27,6 +27,7 @@ export function MapContainer (props) {
     setNearbySearch(fetchResult);
     
     //faire un context push     state.restaurant.push is not a function
+
     // fetchResult.results.map((rest, index) => 
 
     //   state.restaurant.push({
@@ -62,24 +63,6 @@ export function MapContainer (props) {
 
   }
 
-  //Adding Google Place Markers
-  function searchMarker(){
-    if (nearbySearch !== undefined){
-        //console.ĺog("ok");
-        nearbySearch.results.map((rest, index) => 
-            <Marker
-                onClick={onMarkerClick}
-                title={rest.name}
-                name={rest.name}
-                index={rest.id}
-                position={rest.geometry.location} 
-            />
-        )
-    }else {
-        console.log("failed");
-    }
-  }
-
   console.log("nearby", nearbySearch);
   //Defines restaurants to be displayed on map
   let restaurantDisplayed = null;
@@ -108,8 +91,18 @@ export function MapContainer (props) {
               index={index}
               position={{lat: rest.lat, lng: rest.long}} />
           )}
-
-          {searchMarker()}
+          {/* Adding Google Place Markers */}
+          {nearbySearch !== undefined ?
+            nearbySearch.results.map((rest, index) =>
+              <Marker
+                onClick={onMarkerClick}
+                title={rest.name}
+                name={rest.name}
+                index={rest.id}
+                position={rest.geometry.location}
+              />
+            )
+            : console.log("failed")}
 
         </Map>
         <Panel 
