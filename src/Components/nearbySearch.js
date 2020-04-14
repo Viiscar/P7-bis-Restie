@@ -23,7 +23,7 @@ function NearbySearch(){
             address:rest.vicinity,
             lat:rest.geometry.location.lat,
             long:rest.geometry.location.lng,
-            ratings: "",
+            ratings: {stars: "", comment: ""},
             average: rest.rating,
             index: index + 6
           })

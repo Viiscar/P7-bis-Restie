@@ -15,10 +15,8 @@ export function MapContainer (props) {
 
   const changeInputValue = (newValue) => {
 
-      dispatch({ type: 'UPDATE_INPUT', data: newValue});
+    dispatch({ type: 'UPDATE_INPUT', data: newValue,});
   };
-
-  console.log(document.readyState)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,10 +24,7 @@ export function MapContainer (props) {
         .then(response => response.json())
         .then(response => {
           setNearbySearch(response);
-    
-          //faire un context push     state.restaurant.push is not a function
-      
-          console.log("response", response);
+          // il cliquer d'abord sur un marker json pour ne pas avoir l'erreur
       
           response.results.map((rest, index) => 
       
@@ -38,7 +33,7 @@ export function MapContainer (props) {
               address:rest.vicinity,
               lat:rest.geometry.location.lat,
               long:rest.geometry.location.lng,
-              ratings: "",
+              ratings: [],
               average: rest.rating,
               index: index + 6
             })
@@ -46,11 +41,6 @@ export function MapContainer (props) {
           console.log("rest", restaurants);
         })
 
-    // console.log("f",fetchResult.results[0].geometry.location);
-    // console.log("f",fetchResult.results[0].name);
-    // console.log("f",fetchResult.results[0].id);
-    //console.log("f",fetchResult.results[0].rating)
-    // console.log("f",fetchResult.results[0].vicinity)
     }
     fetchData();
   }, []);
@@ -63,9 +53,9 @@ export function MapContainer (props) {
       position: 'absolute',
       right:'0px',
       height: '100%',
-      width: '30%'});
+      width: '30%'
+    });
       
-    //setRestaurantSelected(restaurants[e.index]);
     changeInputValue(restaurants[e.index]);
   
     console.log(restaurants[e.index]);
