@@ -11,6 +11,7 @@ export function MapContainer (props) {
   const [mapStyles, setMapStyles] = useState({width: '100%',height: '100%'});
   const [panelStyles, setPanelStyles] = useState({visibility: 'hidden'});
   const [restaurants] = useState(props.restaurants);
+  const [geoloc] = useState(props.geoloc);
   const [nearbySearch, setNearbySearch] = useState(undefined);
 
   const changeInputValue = (newValue) => {
@@ -20,11 +21,11 @@ export function MapContainer (props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const fetchResult = await fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=18.4663,-66.1057&radius=500&type=restaurant&key=AIzaSyBC2qgPQ2fK60hEy74CACKeZZ6zVT4MBcs')
+      const fetchResult = await fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+geoloc.lat+','+geoloc.lng+'&radius=500&type=restaurant&key=AIzaSyBC2qgPQ2fK60hEy74CACKeZZ6zVT4MBcs')
         .then(response => response.json())
         .then(response => {
           setNearbySearch(response);
-          // il cliquer d'abord sur un marker json pour ne pas avoir l'erreur
+          // il faut cliquer d'abord sur un marker json pour ne pas avoir l'erreur
       
           response.results.map((rest, index) => 
       
@@ -47,7 +48,8 @@ export function MapContainer (props) {
 
   //when click on marker
   function onMarkerClick(e) {
-
+    // if state.restaurant is undefined
+    
     setMapStyles({width: '70%',height: '100%'});
     setPanelStyles({
       position: 'absolute',
@@ -79,7 +81,7 @@ export function MapContainer (props) {
           google={props.google}
           zoom={10}
           style={mapStyles}
-          initialCenter={props.geoloc}
+          initialCenter={geoloc}
           disableDefaultUI= {true}
         >
           {restaurantDisplayed.map((rest, index) => 

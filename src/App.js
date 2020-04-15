@@ -25,20 +25,26 @@ function App() {
       setRestaurants(fetchResult)
     }
     fetchData();
-    if (navigator.geolocation) {
-      console.log("if");
-      const getCurrentLocation = () => {
-        return new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject, {enableHighAccuracy: true, timeout: 10000 })
-        })
-        
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else { 
+        console.log("location failed")
       }
-      getCurrentLocation()
-        .then((data) => {console.log(data)})
-        .catch((error) => {console.log(error)})    
     }
+    
+    function showPosition(position) {
+      console.log("lat", position.coords.latitude);
+      console.log("lat", position.coords.longitude);
+      setGeoloc({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })
+     //console.log(geoloc);
+    }
+    getLocation()
   }, []);
-
+  console.log(geoloc);
   //setGeoloc({
     // lat: position.coords.latitude,
     // lng: position.coords.longitude
@@ -53,14 +59,6 @@ function App() {
     <div className="App">
       <nav className="navbar navbar-expand-sm navbar-light">
         <img className="navbar-brand" src="./Img/RESTIE_logo.png" alt="logo" style={{width:"200px"}} />
-        <ul>
-            <li>
-              Home
-            </li>
-            <li>
-              Restaurants
-            </li>
-        </ul>
       </nav>
       <div>
         Afficher les restaurants comportant {" "}   
@@ -76,6 +74,9 @@ function App() {
       <div className="map-container">
         <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants} selectedStars={selectedStars}/>
       </div>
+      {/* <footer>
+        <p>Footer</p>
+      </footer> */}
     </div>
   );
 }
