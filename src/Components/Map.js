@@ -57,6 +57,7 @@ export function MapContainer (props) {
     <>
       <AppContext.Provider value={{ state, dispatch }}>
       <button type="button" class="btn btn-info btn-lg" data-toggle={props.openModal ? "modal" : ""} data-target="#myModal">Open Modal</button>
+      {/* <div type="button" data-toggle={props.openModal ? "modal" : ""} data-target="#myModal">Open Modal */}
           <Map
             google={props.google}
             zoom={10}
@@ -74,7 +75,7 @@ export function MapContainer (props) {
             )}
           </Map>
           <AddRestaurant newRestLat={newRestLat} newRestLng={newRestLng} />
-        
+        {/* </div> */}
         <Panel 
           panelStyles={panelStyles}
         />
