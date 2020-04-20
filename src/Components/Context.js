@@ -13,13 +13,16 @@ export const initialState = {
 export function reducer(state, action) {
     switch (action.type) {
         case 'UPDATE_INPUT':
-            console.log("yes", initialState)
+            console.log("yes", state)
             // if initialstae.rest = '' 
-            return update(state, { restaurant: {$set: action.data}});
+            //return update(state, { restaurant: {$set: action.data}});
+            return {
+                rest: action.data
+            };
 
 
         default:
-            console.log(initialState);
+            console.log(state);
             return initialState;
     }
 }

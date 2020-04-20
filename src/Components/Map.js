@@ -17,6 +17,7 @@ export function MapContainer (props) {
   const changeInputValue = (newValue) => {
 
     dispatch({ type: 'UPDATE_INPUT', data: newValue,});
+    return true
   };
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export function MapContainer (props) {
   }, []);
 
   //when click on marker
-  function onMarkerClick(e) {
+  async function onMarkerClick(e) {
     // if state.restaurant is undefined
     
     setMapStyles({width: '70%',height: '100%'});
@@ -58,9 +59,9 @@ export function MapContainer (props) {
       width: '30%'
     });
       
-    changeInputValue(restaurants[e.index]);
+    const change = await changeInputValue(restaurants[e.index]);
   
-    console.log(restaurants[e.index]);
+    console.log(change);
 
   }
 
