@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 import Panel from './Panel';
 import AddRestaurant from './AddRestaurant';
@@ -16,6 +16,7 @@ export function MapContainer (props) {
   //Click geolocation
   const [newRestLat, setNewRestLat] = useState("lat");
   const [newRestLng, setNewRestLng] = useState("lng");
+
 
   //Getting click geoloc on map
   function handleClick(mapProps, map, event) {
@@ -52,13 +53,35 @@ export function MapContainer (props) {
   } else {
     restaurantDisplayed = props.restaurants.filter( rest => rest.average <= props.selectedStars);
   }
+  console.log(props.openModal);
+  const [openMod, setOpenMod] = useState(props.openModal);
+  
+  useEffect(() => {
+    setOpenMod(props.openModal)
 
+  }, [props.openModal]);
+
+  console.log("openMod", openMod);
+
+  function  openModal(mapProps, map, clickEvent){ //remplacer par openmodal
+    console.log(mapProps);
+    console.log(map);
+    console.log(clickEvent.latLng.lat());
+
+    if (openMod){
+      //jquery openmodal
+    }
+    //si openmod =true on lance la modal
+    // si faux rien
+    //appeler openmodal
+  }
   return ( 
     <>
       <AppContext.Provider value={{ state, dispatch }}>
-      <button type="button" class="btn btn-info btn-lg" data-toggle={props.openModal ? "modal" : ""} data-target="#myModal">Open Modal</button>
+      <button type="button" class="btn btn-info btn-lg" data-toggle={openMod ? "modal" : ""} data-target="#myModal">Open Modal</button>
       {/* <div type="button" data-toggle={props.openModal ? "modal" : ""} data-target="#myModal">Open Modal */}
           <Map
+            onClick={openModal}
             google={props.google}
             zoom={10}
             style={mapStyles}
