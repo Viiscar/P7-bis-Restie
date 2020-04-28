@@ -14,17 +14,8 @@ export function MapContainer (props) {
   const [restaurants] = useState(props.restaurants);
 
   //Click geolocation
-  const [newRestLat, setNewRestLat] = useState("lat");
-  const [newRestLng, setNewRestLng] = useState("lng");
-
-
-  //Getting click geoloc on map
-  // function handleClick(mapProps, map, event) {
-
-  //   setNewRestLat(event.latLng.lat());
-  //   setNewRestLng(event.latLng.lng());
-
-  // }
+  const [newRestLat, setNewRestLat] = useState();
+  const [newRestLng, setNewRestLng] = useState();
 
   const changeInputValue = (newValue) => {
 
@@ -57,7 +48,6 @@ export function MapContainer (props) {
 
   //Modal
   const [show, setShow] = useState(false);
-  //const openModal = () => setShow(true);
   const closeModal = () => setShow(false);
 
   const [openMod, setOpenMod] = useState(props.openModal);
@@ -67,28 +57,19 @@ export function MapContainer (props) {
 
   }, [props.openModal]);
 
-  console.log("openMod", openMod);
-
-  function  openModal(mapProps, map, clickEvent){ //remplacer par openmodal
+  function  openModal(mapProps, map, clickEvent){ 
     //console.log(mapProps);
     //console.log(map);
-    console.log(clickEvent.latLng.lat());
+    setNewRestLat(clickEvent.latLng.lat());
+    setNewRestLng(clickEvent.latLng.lng());
 
     if (openMod){
       setShow(true);
-      //console.log("show", show);
     }
-    //si openmod =true on lance la modal
-    // si faux rien
-    //appeler openmodal
-
-    console.log("show", show);
   }
   return ( 
     <>
       <AppContext.Provider value={{ state, dispatch }}>
-      {/* <button type="button" class="btn btn-info btn-lg" data-toggle={openMod ? "modal" : ""} data-target="#myModal">Open Modal</button> */}
-      {/* <div type="button" data-toggle={props.openModal ? "modal" : ""} data-target="#myModal">Open Modal */}
           <Map
             onClick={openModal}
             google={props.google}
@@ -106,8 +87,7 @@ export function MapContainer (props) {
                 position={{lat: rest.lat, lng: rest.long}} />
             )}
           </Map>
-          <AddRestaurant newRestLat={newRestLat} newRestLng={newRestLng} closeModal={closeModal} show={show} />
-        {/* </div> */}
+          <AddRestaurant newRestLat={newRestLat} newRestLng={newRestLng} closeModal={closeModal} show={show} restaurants={restaurants}/>
         <Panel 
           panelStyles={panelStyles}
         />
