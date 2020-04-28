@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import CommentForm from './Comments/CommentForm';
-//import Photos from './Photos';
 import { AppContext } from './Context';
 
 function Panel(props){
@@ -15,7 +14,6 @@ function Panel(props){
         <div style={props.panelStyles} >
             <h3>{state.restaurant.restaurantName}</h3>
             <img src={streetView}/>
-            {/* < Photos /> */}
             <h6>Adresse:</h6>
             <p>{state.restaurant.address}</p>
             <h6>Average stars:</h6>

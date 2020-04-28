@@ -22,10 +22,7 @@ function AddRestaurant(props){
                 address: data.adresse,
                 lat: props.newRestLat,
                 long: props.newRestLng,
-                ratings: {
-                    stars: "",
-                    comment: ""
-                }
+                ratings: []
             }
         console.log(newRestaurant);
         
