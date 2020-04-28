@@ -6,13 +6,14 @@ function App() {
   const [restaurants, setRestaurants] = useState([]);
   const [geoloc, setGeoloc] = useState({lat: 18.4625, lng:-66.1099});
   const [selectedStars, setSelectedStars] = useState();
+  const [openModal, setOpenModal] = useState(false);
 
   // Getting restaurant list from JSON
   useEffect(() => {
     const fetchData = async () => {
       const fetchResult = await fetch('./restaurants.JSON')
         .then(response => response.json());
-      
+
       // calculating average stars per restaurant
       fetchResult.map(rest => {
         const length = rest.ratings.length;
@@ -25,20 +26,26 @@ function App() {
       setRestaurants(fetchResult)
     }
     fetchData();
-    if (navigator.geolocation) {
-      console.log("if");
-      const getCurrentLocation = () => {
-        return new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject, {enableHighAccuracy: true, timeout: 10000 })
-        })
-        
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        console.log("location failed")
       }
-      getCurrentLocation()
-        .then((data) => {console.log(data)})
-        .catch((error) => {console.log(error)})    
     }
-  }, []);
 
+    function showPosition(position) {
+      console.log("lat", position.coords.latitude);
+      console.log("lat", position.coords.longitude);
+      setGeoloc({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      })
+     //console.log(geoloc);
+    }
+    getLocation()
+  }, []);
+  console.log(geoloc);
   //setGeoloc({
     // lat: position.coords.latitude,
     // lng: position.coords.longitude
@@ -55,27 +62,30 @@ function App() {
         <img className="navbar-brand" src="./Img/RESTIE_logo.png" alt="logo" style={{width:"200px"}} />
         <ul>
             <li>
-              Home
+            <div>
+              Afficher les restaurants comportant {" "}
+              <select name="my_html_select_box"  onClick={handleClick} >
+                <option value="-">-</option>
+                <option value="1">1 etoiles</option>
+                <option value="2">2 etoiles</option>
+                <option value="3">3 etoiles</option>
+                <option value="4">4 etoiles</option>
+                <option value="5">5 etoiles</option>
+              </select>
+            </div>
             </li>
             <li>
-              Restaurants
+              Pour ajouter un restaurant cliquer <button onClick={() => setOpenModal(!openModal)}>ici</button>, puis sur la carte a l'emplacement du restaurant.
             </li>
         </ul>
       </nav>
-      <div>
-        Afficher les restaurants comportant {" "}   
-        <select name="my_html_select_box"  onClick={handleClick} >
-          <option value="-">-</option>
-          <option value="1">1 etoiles</option>
-          <option value="2">2 etoiles</option>
-          <option value="3">3 etoiles</option>
-          <option value="4">4 etoiles</option>
-          <option value="5">5 etoiles</option>
-        </select>
-      </div>
+      <div className="navLine"></div>
       <div className="map-container">
-        <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants} selectedStars={selectedStars}/>
+        <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants} selectedStars={selectedStars} openModal={openModal}/>
       </div>
+       {/* <footer>
+        <p>Footer</p>
+       </footer> */}
     </div>
   );
 }
