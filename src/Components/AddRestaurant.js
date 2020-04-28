@@ -1,5 +1,7 @@
 import React, {useState, useContext} from 'react';
+import { useForm } from "react-hook-form";
 import { AppContext } from './Context';
+import ReactDOM from "react-dom";
 //import $ from 'jquery';
 
 function AddRestaurant(props){
@@ -10,63 +12,58 @@ function AddRestaurant(props){
     //Click geolocation
     const [newRestLat] = useState(props.newRestLat);
     const [newRestLng] = useState(props.newRestLng);
+    const [val, setVal] = useState("");
+    //console.log(newRestLng);
 
-    console.log(newRestLng);
-
-    //On submit
-    function handleSubmit(e) {
-        //e is undefined
-
-        // let newRestaurant = {
-        //     restaurantName: e.target[0].value,
-        //     address: e.target[1].value,
-        //     lat: newRestLat,
-        //     long: newRestLng,
-        //     ratings: {
-        //         stars: "",
-        //         comment: ""
-        //     }
-        // }
-
-        // state.restaurant.push(newRestaurant);
-
-       console.log("e")
     
-        //e.preventDefault();
-    
-        //fermeture du modal
-        //$("#myModal .close").click()
+    const { register, handleSubmit, watch, errors } = useForm()
+    const onSubmit = data => { 
+        console.log("rest", data.restaurant);
+        console.log("ad", data.adresse);
+        let newRestaurant = {
+                restaurantName: data.restaurant,
+                address: data.adresse,
+                lat: "newRestLat",
+                long: "newRestLng",
+                ratings: {
+                    stars: "",
+                    comment: ""
+                }
+            }
+        console.log(newRestaurant);
+            // state.restaurant.push(newRestaurant);
+
     }
     
+    console.log(watch('adresse')); // watch input value by passing the name of it
+    
+        
+    const { show, closeModal } = props;
+    
+    console.log("showAdd", show);
     return (
         // Modal
-        <div className="modal hide fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
-            <div className="modal-dialog modal-lg">
-                {/* Modal content */}
-                <div className="modal-content">
-        
-                    <div className="modal-header">
-                        <h4 className="modal-title">Veuillez ajouter votre restaurant</h4>
-                        <button type="button" class="close"  aria-hidden="true" data-dismiss="modal">&times;</button>
-                    </div>
-            
-                    <div className="modal-body">
-                        <form role="form" onSubmit={handleSubmit()}>
-                            <input type= "text" name = "restaurant" placeholder = "Nom du restaurant" /><br /><br />
-                            <input type = "text" name = "adresse"placeholder= "Adresse du restaurant" />
-                            <br /><br /> 
-                            <input type = "submit" value = "Envoyer"/>      
-                        </form>
-                    </div>
+        // <div className={show ? "modaleeee" : "hideeee"}>
+        //     <button onClick={closeModal}>X</button>
+        //     <h1>Modal heading</h1>
+        //     <p>This is modal content</p>
+        // </div>
 
-            
-                    <div className="modal-footer">
-                        <button type="button" class="btn btn-danger" aria-hidden="true" data-dismiss="modal">Close</button>
-                    </div>
-        
-                </div>
+        <>
+            {/* <div className={show ? "overlay" : "hideeee"} onClick={closeModal} /> */}
+            <div className={show ? "modaleeee" : "hideeee"}>
+                <button onClick={closeModal}>&times;</button>
+                <h4>Veuillez ajouter votre restaurant</h4>
+                <form onSubmit={handleSubmit(onSubmit)}>
+          {/* register your input into the hook by invoking the "register" function */}
+            <input name="restaurant"  ref={register({ required: true })} placeholder = "Nom du restaurant" /> {errors.restaurant && <span>This field is required</span>}<br /><br />
+            {/* include validation with required or other standard HTML validation rules */}
+            <input name="adresse" ref={register({ required: true })} placeholder= "Adresse du restaurant"/> {errors.adresse && <span>This field is required</span>}<br /><br /> 
+            {/* errors will return when field validation fails  */}
+            <input type="submit" onClick={closeModal}/>
+          </form>
             </div>
-        </div>
+        </>
 
     )
 
