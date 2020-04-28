@@ -1,8 +1,8 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 import Panel from './Panel';
+import AddRestaurant from './AddRestaurant';
 import {AppContext, initialState, reducer} from './Context';
-//import NearbySearch from './nearbySearch';
 
 export function MapContainer (props) {
 
@@ -14,11 +14,15 @@ export function MapContainer (props) {
   const [geoloc] = useState(props.geoloc);
   const [nearbySearch, setNearbySearch] = useState(undefined);
 
+  //Click geolocation
+  const [newRestLat, setNewRestLat] = useState();
+  const [newRestLng, setNewRestLng] = useState();
+
   const changeInputValue = (newValue) => {
 
     dispatch({ type: 'UPDATE_INPUT', data: newValue,});
-    return true
-  };
+};
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,10 +79,33 @@ export function MapContainer (props) {
     restaurantDisplayed = props.restaurants.filter( rest => rest.average <= props.selectedStars);
   }
 
+  //Modal
+  const [show, setShow] = useState(false);
+  const closeModal = () => setShow(false);
+
+  const [openMod, setOpenMod] = useState(props.openModal);
+  
+  useEffect(() => {
+    setOpenMod(props.openModal)
+
+  }, [props.openModal]);
+
+  function  openModal(mapProps, map, clickEvent){ 
+    //console.log(mapProps);
+    //console.log(map);
+    setNewRestLat(clickEvent.latLng.lat());
+    setNewRestLng(clickEvent.latLng.lng());
+
+    if (openMod){
+      setShow(true);
+    }
+  }
+
   return ( 
     <>
       <AppContext.Provider value={{ state, dispatch }}>
         <Map
+          onClick={openModal}
           google={props.google}
           zoom={10}
           style={mapStyles}
@@ -106,9 +133,8 @@ export function MapContainer (props) {
             )
             : console.log("failed")}
 
-          {/* <NearbySearch/> */}
-
         </Map>
+        <AddRestaurant newRestLat={newRestLat} newRestLng={newRestLng} closeModal={closeModal} show={show} restaurants={restaurants}/>
         <Panel 
           panelStyles={panelStyles}
         />

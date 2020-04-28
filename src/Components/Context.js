@@ -15,10 +15,10 @@ export function reducer(state, action) {
         case 'UPDATE_INPUT':
             console.log("yes", state)
             // if initialstae.rest = '' 
-            //return update(state, { restaurant: {$set: action.data}});
-            return {
-                rest: action.data
-            };
+            return update(state, { restaurant: {$set: action.data}});
+            // return {
+            //     rest: action.data
+            // };
 
 
         default:

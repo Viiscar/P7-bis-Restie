@@ -8,7 +8,7 @@ function Panel(props){
     const {state} = useContext(AppContext);
 
     //StreetView
-    const lat =  state.restaurant.lat;
+    const lat =  state.restaurant.lat;  //TypeError: Cannot read property 'lat' of undefined
     const long = state.restaurant.long;
     const streetView = "https://maps.googleapis.com/maps/api/streetview?size=400x400&location=" + lat + "," + long + "9&fov=80&heading=70&pitch=0&key=AIzaSyBC2qgPQ2fK60hEy74CACKeZZ6zVT4MBcs"
 
