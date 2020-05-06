@@ -1,19 +1,18 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import Comment from './Comment';
-import { AppContext } from '../Context';
 
 function CommentList(props){
-
-    const {state} = useContext(AppContext);
+    //Props & State
+    const selectedRestaurantRatings = props.ratings
     const [ratings, setRatings] = useState([]);
-    
+
     //Adding ratings to Context restaurant list
     useEffect(() => {
-        setRatings(state.restaurant.ratings);
-    }, [state.restaurant])
+        setRatings(selectedRestaurantRatings);
+    }, [selectedRestaurantRatings])
 
     return(
-        ratings ?   
+        ratings ?
         <div className="commentList">
             <h5 className="text-muted mb-4">
                 <span className="badge badge-success">{ratings.length}</span>

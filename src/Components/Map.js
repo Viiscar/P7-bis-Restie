@@ -1,98 +1,89 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 import Panel from './Panel';
 import AddRestaurant from './AddRestaurant';
-import {AppContext, initialState, reducer} from './Context';
 
 export function MapContainer (props) {
 
-  const [state, dispatch] = useReducer(reducer, initialState);
-
+  //State
   const [mapStyles, setMapStyles] = useState({width: '100%',height: '100%'});
   const [panelStyles, setPanelStyles] = useState({visibility: 'hidden'});
   const [restaurants] = useState(props.restaurants);
   const [geoloc] = useState(props.geoloc);
   const [nearbySearch, setNearbySearch] = useState(undefined);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(undefined);
 
-  //Click geolocation
-  const [newRestLat, setNewRestLat] = useState();
-  const [newRestLng, setNewRestLng] = useState();
+  //Fetching Google Place
+  function fetchPlaces(mapProps, map) {
+    const {google} = mapProps;
+    const service = new google.maps.places.PlacesService(map);
+    console.log(google, service);
+    const userPosition = new google.maps.LatLng(geoloc.lat, geoloc.lng);
+    const request = {
+      location: userPosition,
+      radius: '500',
+      type: ['restaurant']
+    };
+    service.nearbySearch(request, (data) => {
+      console.log(data);
+      data.forEach((element, index) => {
+        restaurants.push(
+          {
+            index: restaurants.length,
+            restaurantName:element.name,
+            address:element.vicinity,
+            lat:element.geometry.location.lat(),
+            long:element.geometry.location.lng(),
+            ratings: [],
+            average: element.rating
+          })
+      });
+      setNearbySearch(restaurants);
+    });
+  }
 
-  const changeInputValue = (newValue) => {
-
-    dispatch({ type: 'UPDATE_INPUT', data: newValue,});
-};
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchResult = await fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+geoloc.lat+','+geoloc.lng+'&radius=500&type=restaurant&key=AIzaSyBC2qgPQ2fK60hEy74CACKeZZ6zVT4MBcs')
-        .then(response => response.json())
-        .then(response => {
-          setNearbySearch(response);
-          // il faut cliquer d'abord sur un marker json pour ne pas avoir l'erreur
-      
-          response.results.map((rest, index) => 
-      
-            restaurants.push({
-              restaurantName:rest.name,
-              address:rest.vicinity,
-              lat:rest.geometry.location.lat,
-              long:rest.geometry.location.lng,
-              ratings: [],
-              average: rest.rating,
-              index: index + 6
-            })
-          )
-          console.log("rest", restaurants);
-        })
-
-    }
-    fetchData();
-  }, []);
-
-  //when click on marker
-  async function onMarkerClick(e) {
-    // if state.restaurant is undefined
-    
+  //When click on marker
+  function onMarkerClick(index) {
     setMapStyles({width: '70%',height: '100%'});
     setPanelStyles({
       position: 'absolute',
       right:'0px',
       height: '100%',
-      width: '30%'
+      width: '30%',
+      overflow: 'auto'
     });
-      
-    const change = await changeInputValue(restaurants[e.index]);
-  
-    console.log(change);
-
+    setSelectedRestaurant(restaurantDisplayed[index])
   }
 
-  console.log("nearby", nearbySearch);
-  //Defines restaurants to be displayed on map
+  //Defines restaurant markers to be displayed on map
   let restaurantDisplayed = null;
-    
+  
   if(props.selectedStars === "-" || props.selectedStars === undefined){
-    restaurantDisplayed = props.restaurants;
+    restaurantDisplayed = nearbySearch;
   } else {
-    restaurantDisplayed = props.restaurants.filter( rest => rest.average <= props.selectedStars);
+    restaurantDisplayed = nearbySearch.filter( rest => {
+      if(rest.average >= parseInt(props.selectedStars)){
+        return rest
+      }
+    });
   }
-
+  
   //Modal
   const [show, setShow] = useState(false);
+  const [openMod, setOpenMod] = useState(props.openModal);
+
   const closeModal = () => setShow(false);
 
-  const [openMod, setOpenMod] = useState(props.openModal);
-  
+  //Click geolocation
+  const [newRestLat, setNewRestLat] = useState();
+  const [newRestLng, setNewRestLng] = useState();
+
   useEffect(() => {
     setOpenMod(props.openModal)
-
   }, [props.openModal]);
 
-  function  openModal(mapProps, map, clickEvent){ 
-    //console.log(mapProps);
-    //console.log(map);
+  function  openModal(mapProps, map, clickEvent){
+
     setNewRestLat(clickEvent.latLng.lat());
     setNewRestLng(clickEvent.latLng.lng());
 
@@ -101,47 +92,41 @@ export function MapContainer (props) {
     }
   }
 
-  return ( 
+  return (
     <>
-      <AppContext.Provider value={{ state, dispatch }}>
-        <Map
-          onClick={openModal}
-          google={props.google}
-          zoom={10}
-          style={mapStyles}
-          initialCenter={geoloc}
-          disableDefaultUI= {true}
-        >
-          {restaurantDisplayed.map((rest, index) => 
+      <Map
+        onClick={openModal}
+        google={props.google}
+        onReady={fetchPlaces}
+        zoom={11}
+        style={mapStyles}
+        initialCenter={geoloc}
+        disableDefaultUI= {true}
+      >
+
+        {nearbySearch !== undefined ?
+          restaurantDisplayed.map((rest, index) =>
             <Marker
-              onClick={onMarkerClick}
+              key={index}
+              onClick={onMarkerClick.bind(this, index)}
               title={rest.restaurantName}
               name={rest.restaurantName}
-              index={index}
               position={{lat: rest.lat, lng: rest.long}} />
-          )}
-          {/* Adding Google Place Markers */}
-          {nearbySearch !== undefined ?
-            nearbySearch.results.map((rest, index) =>
-              <Marker
-                onClick={onMarkerClick}
-                title={rest.name}
-                name={rest.name}
-                index={rest.id}
-                position={rest.geometry.location}
-              />
-            )
-            : console.log("failed")}
+          )
+          : console.log("failed")}
 
-        </Map>
-        <AddRestaurant newRestLat={newRestLat} newRestLng={newRestLng} closeModal={closeModal} show={show} restaurants={restaurants}/>
-        <Panel 
-          panelStyles={panelStyles}
-        />
-      </AppContext.Provider>
+      </Map>
+      <AddRestaurant newRestLat={newRestLat} newRestLng={newRestLng} closeModal={closeModal} show={show} restaurants={restaurants}/>
+      {selectedRestaurant !== undefined ?
+      <Panel
+        panelStyles={panelStyles}
+        selectedRestaurant={selectedRestaurant}
+        setSelectedRestaurant={setSelectedRestaurant}
+      />
+      : console.log("panel erreur")
+      }
     </>
-    
-  );
+  )
 }
 
 export default GoogleApiWrapper({

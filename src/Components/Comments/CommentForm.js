@@ -1,11 +1,9 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import CommentList from './CommentList';
-import { AppContext } from '../Context';
 
 function CommentForm(props){
-    //Context
-    const {state} = useContext(AppContext);
-
+    //Props & State
+    const selectedRestaurant = props.selectedRestaurant;
     const [stars, setStars] = useState("-");
     const [comment, setComment] = useState("");
     const [error, setError] = useState("");
@@ -22,17 +20,18 @@ function CommentForm(props){
 
     //Adds comment on submit
     function onSubmit(e){
+
         e.preventDefault();
         if (stars !== "-" && comment !== ""){
             setError("");
-            
-            state.restaurant.ratings.push({stars: stars, comment: comment});
+            selectedRestaurant.ratings.push({stars: stars, comment: comment})
+
+            props.setSelectedRestaurant({...selectedRestaurant})
             setComment("")
 
         } else {
             setError("Veullez selectionner une note et écrire un commentaire");
         }
-        
     }
 
     //If comment and rate are not added it will display an error mesage
@@ -41,7 +40,7 @@ function CommentForm(props){
           <div className="alert alert-danger">{error}</div>
         ) : null;
     }
-    
+
 
     return(
         <>
@@ -77,7 +76,7 @@ function CommentForm(props){
                     </button>
                 </div>
             </form>
-            <CommentList />
+            <CommentList ratings={selectedRestaurant.ratings}/>
         </>
     )
 

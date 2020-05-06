@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import GoogleApiWrapper from './Components/Map';
 
 function App() {
-
+  
+  //state
   const [restaurants, setRestaurants] = useState([]);
   const [geoloc, setGeoloc] = useState({lat: 18.4625, lng:-66.1099});
   const [selectedStars, setSelectedStars] = useState();
   const [openModal, setOpenModal] = useState(false);
 
-  // Getting restaurant list from JSON
   useEffect(() => {
+
+    //Getting restaurant list from JSON
     const fetchData = async () => {
       const fetchResult = await fetch('./restaurants.JSON')
         .then(response => response.json());
@@ -22,10 +24,11 @@ function App() {
         rest.average =  totalStars/length;
 
       } )
-
       setRestaurants(fetchResult)
     }
     fetchData();
+
+    //Getting geolocation
     function getLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -35,23 +38,15 @@ function App() {
     }
 
     function showPosition(position) {
-      console.log("lat", position.coords.latitude);
-      console.log("lat", position.coords.longitude);
       setGeoloc({
         lat: position.coords.latitude,
         lng: position.coords.longitude
       })
-     //console.log(geoloc);
     }
     getLocation()
   }, []);
-  console.log(geoloc);
-  //setGeoloc({
-    // lat: position.coords.latitude,
-    // lng: position.coords.longitude
-    // })
-
-  //when we select stars
+ 
+  //Selecting stars in filter
   function handleClick(e){
     setSelectedStars(e.target.value)
   }
@@ -64,7 +59,7 @@ function App() {
             <li>
             <div>
               Afficher les restaurants comportant {" "}
-              <select name="my_html_select_box"  onClick={handleClick} >
+              <select className="btn btn-light" name="my_html_select_box"  onClick={handleClick} >
                 <option value="-">-</option>
                 <option value="1">1 etoiles</option>
                 <option value="2">2 etoiles</option>
@@ -75,7 +70,7 @@ function App() {
             </div>
             </li>
             <li>
-              Pour ajouter un restaurant cliquer <button onClick={() => setOpenModal(!openModal)}>ici</button>, puis sur la carte a l'emplacement du restaurant.
+              <button className="btn btn-light" onClick={() => setOpenModal(!openModal)}>Ajouter un restaurant</button> {openModal === true ?"puis cliquez sur la carte a l'emplacement du restaurant." : ""} 
             </li>
         </ul>
       </nav>
@@ -83,9 +78,6 @@ function App() {
       <div className="map-container">
         <GoogleApiWrapper geoloc={geoloc} restaurants={restaurants} selectedStars={selectedStars} openModal={openModal}/>
       </div>
-       {/* <footer>
-        <p>Footer</p>
-       </footer> */}
     </div>
   );
 }

@@ -3,36 +3,37 @@
   height: 8rem;
  }
 
- .navLine{
+.navLine{
   height: 0.5rem;
   background-color: #213F9A;
 }
 
- ul {
-     list-style: none;
- }
+form{
+  padding: 1rem;
+}
 
- img,p,h6, form, .commentList {
-     padding-left: 10px;
- }
+ul {
+  list-style: none;
+  color: white;
+  display: flex;
+}
 
- h3 {
-     padding: 10px;
- }
+li {
+  padding-top: 2rem;
+  padding-left: 4rem;
+}
 
- h6 {
-     padding-top: 10px;
- }
+img,p,h6, .commentList {
+  padding-left: 10px;
+}
 
- /* footer{
-   background-color: darkred;
-   position: relative;
-   bottom: 0px;
- }
+h3 {
+  padding: 10px;
+}
 
- #root{
-   background-color: black;
- } */
+h6 {
+  padding-top: 10px;
+}
 
 .show {
   display: block;
@@ -40,17 +41,6 @@
 
 .hideeee {
   display: none;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #0000003a;
-  transition: opacity 0.2s ease;
-  z-index: 7
 }
 
 .modaleeee {
@@ -80,5 +70,4 @@
   height: 1.6rem;
   background-color: #ff0000;
   box-shadow: 1px 1px 1px #0000003a;
-  /* clip-path: polygon(0 0, 0 0, 30% 50%, 0 100%, 0 100%, 50% 70%, 100% 100%, 100% 100%, 70% 50%, 100% 0, 100% 0, 50% 30%); */
 }
