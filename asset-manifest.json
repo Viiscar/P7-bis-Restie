@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/P7-bis-Restie/static/js/main.43663a12.chunk.js",
+    "main.js.map": "/P7-bis-Restie/static/js/main.43663a12.chunk.js.map",
+    "runtime-main.js": "/P7-bis-Restie/static/js/runtime-main.e0b25ffd.js",
+    "runtime-main.js.map": "/P7-bis-Restie/static/js/runtime-main.e0b25ffd.js.map",
+    "static/js/2.4d02d402.chunk.js": "/P7-bis-Restie/static/js/2.4d02d402.chunk.js",
+    "static/js/2.4d02d402.chunk.js.map": "/P7-bis-Restie/static/js/2.4d02d402.chunk.js.map",
+    "index.html": "/P7-bis-Restie/index.html",
+    "precache-manifest.e2d85092fa68f4716d2f22f3f0f8abbf.js": "/P7-bis-Restie/precache-manifest.e2d85092fa68f4716d2f22f3f0f8abbf.js",
+    "service-worker.js": "/P7-bis-Restie/service-worker.js",
+    "static/js/2.4d02d402.chunk.js.LICENSE.txt": "/P7-bis-Restie/static/js/2.4d02d402.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e0b25ffd.js",
+    "static/js/2.4d02d402.chunk.js",
+    "static/js/main.43663a12.chunk.js"
+  ]
+}
